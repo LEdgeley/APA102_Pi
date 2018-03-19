@@ -86,9 +86,12 @@ class APA102:
 
         self.leds = [self.LED_START,0,0,0] * self.num_led # Pixel buffer
         
-        # MOSI 10 and SCLK 11 is hardware SPI, which needs to be set-up differently
+        # MOSI 10 and SCLK 11 is hardware SPI0, which needs to be set-up differently
         if mosi == 10 and sclk == 11:
         	self.spi = SPI.SpiDev(0, 0, max_speed_hz) # Bus 0, chip select 0
+        # MOSI 20 and SCLK 21 is hardware SPI1, which also needs to be set-up differently
+        elif mosi == 20 and sclk == 21:
+        	self.spi = SPI.SpiDev(1, 0, max_speed_hz) # Bus 1, chip select 0
         else:
         	self.spi = SPI.BitBang(GPIO.get_platform_gpio(), sclk, mosi)
 
